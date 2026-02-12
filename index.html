@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>شروق نور</title>
+    <!-- استدعاء خطوط عربية رومانسية وفاخرة -->
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #150d22 0%, #020105 100%);
+            overflow: hidden;
+            font-family: 'Amiri', serif;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* خلفية اليراعات */
+        #firefliesCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+            padding: 20px;
+        }
+
+        /* الزر النابض المبدئي */
+        .magic-orb {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff7d6 0%, #ffdf5d 50%, #d4af37 100%);
+            box-shadow: 0 0 30px #ffdf5d, 0 0 60px #ff8c00, inset 0 0 20px #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5c3a00;
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            animation: pulse-orb 2s infinite alternate;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes pulse-orb {
+            0% { transform: scale(1); box-shadow: 0 0 20px #ffdf5d, 0 0 40px #ff8c00; }
+            100% { transform: scale(1.1); box-shadow: 0 0 40px #fff7d6, 0 0 80px #ffb347; }
+        }
+
+        .magic-orb.explode {
+            transform: scale(30);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* اسم نور المتوهج */
+        .name-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: clamp(5rem, 15vw, 10rem); /* حجم متجاوب كبير جداً */
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            opacity: 0;
+            background: linear-gradient(to bottom, #FFF8DC, #FFD700, #DAA520);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0px 0px 30px rgba(255, 215, 0, 0.5);
+            transition: all 2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .name-title.show {
+            opacity: 1;
+            transform: translate(-50%, -80%) scale(1); /* يرتفع للأعلى قليلاً لترك مساحة للشعر */
+        }
+
+        /* أبيات الشعر */
+        .poem-container {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            pointer-events: none;
+        }
+
+        .poem-line {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: #fdfbf7;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1.5s ease;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .poem-line.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* التوقيع */
+        .signature {
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Aref Ruqaa', serif;
+            color: #d4af37;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            opacity: 0;
+            transition: opacity 2s ease;
+            letter-spacing: 1px;
+            pointer-events: none;
+        }
+        
+        .signature.show {
+            opacity: 0.8;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- الكانفاس لرسم اليراعات الذهبية المتطايرة -->
+    <canvas id="firefliesCanvas"></canvas>
+
+    <div class="container">
+        
+        <!-- الزر الذي ستضغط عليه ابنتك -->
+        <div id="orbBtn" class="magic-orb">
+            المسي هنا
+        </div>
+
+        <!-- اسم "نور" مكتوب هنا بوضوح -->
+        <h1 id="theName" class="name-title">نـــور</h1>
+
+        <!-- الكلمات الشاعرية الرومانسية -->
+        <div class="poem-container">
+            <div class="poem-line" id="line1">أنتِ شروق الشمس في أيامي..</div>
+            <div class="poem-line" id="line2">والقمر الذي يضيء ليالي عمري،</div>
+            <div class="poem-line" id="line3">يا أجمل قصيدة كتبها القدر في حياتي.</div>
+        </div>
+
+    </div>
+
+    <!-- التوقيع الخاص بك -->
+    <div id="signatureText" class="signature">
+        من إعداد قيس جازي
+    </div>
+
+    <script>
+        // --- 1. برمجة تأثيرات الظهور (النقر على الزر) ---
+        const orbBtn = document.getElementById('orbBtn');
+        const theName = document.getElementById('theName');
+        const lines = [
+            document.getElementById('line1'),
+            document.getElementById('line2'),
+            document.getElementById('line3')
+        ];
+        const signatureText = document.getElementById('signatureText');
+
+        orbBtn.addEventListener('click', () => {
+            // انفجار واختفاء الزر
+            orbBtn.classList.add('explode');
+
+            // بعد نصف ثانية، يظهر اسم "نور" بشكل ساحر
+            setTimeout(() => {
+                theName.classList.add('show');
+                
+                // زيادة سرعة وكثافة اليراعات احتفالاً بظهور الاسم
+                boostFireflies();
+
+                // إظهار أبيات الشعر بالتدريج (كل سطر بعد الآخر بثانية ونصف)
+                lines.forEach((line, index) => {
+                    setTimeout(() => {
+                        line.classList.add('show');
+                    }, 1500 + (index * 1500));
+                });
+
+                // إظهار التوقيع في النهاية بعد اكتمال الشعر
+                setTimeout(() => {
+                    signatureText.classList.add('show');
+                }, 1500 + (lines.length * 1500) + 1000);
+
+            }, 500);
+        });
+
+        // --- 2. برمجة اليراعات المضيئة (Fireflies) للجمالية ---
+        const canvas = document.getElementById('firefliesCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let fireflies = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Firefly {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.life = Math.random();
+                this.pulseSpeed = 0.01 + Math.random() * 0.02;
+            }
+
+            update(isBoosted) {
+                // إذا تم الضغط على الزر، تتسارع اليراعات
+                let currentSpeedX = isBoosted ? this.speedX * 5 : this.speedX;
+                let currentSpeedY = isBoosted ? this.speedY * 5 : this.speedY;
+
+                this.x += currentSpeedX;
+                this.y += currentSpeedY - (isBoosted ? 1 : 0.2); // تتجه للأعلى قليلاً
+
+                // نبض الضوء
+                this.life += this.pulseSpeed;
+                this.opacity = (Math.sin(this.life) + 1) / 2;
+
+                // إعادة اليراعة إذا خرجت من الشاشة
+                if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+                    this.x = Math.random() * width;
+                    this.y = height + 10;
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 215, 0, ${this.opacity})`;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = "#FFD700";
+                ctx.fill();
+            }
+        }
+
+        // إنشاء اليراعات
+        for (let i = 0; i < 80; i++) {
+            fireflies.push(new Firefly());
+        }
+
+        let isBoosted = false;
+        function boostFireflies() {
+            isBoosted = true;
+            // إضافة يراعات جديدة
+            for (let i = 0; i < 50; i++) {
+                fireflies.push(new Firefly());
+            }
+            // تهدئة السرعة بعد 3 ثواني
+            setTimeout(() => {
+                isBoosted = false;
+            }, 3000);
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            fireflies.forEach(firefly => {
+                firefly.update(isBoosted);
+                firefly.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
+
